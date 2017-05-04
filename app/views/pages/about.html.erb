@@ -1,2 +1,31 @@
 <h1><%= @title %></h1>
 <p><%= @content %></p>
+
+<!-- tästä alaspäin uutta koodia-->
+
+<table id ="Twiits">
+<tr>
+	<th>Message</th>
+	<th> Date </th>
+	</tr>
+
+<% @twiits.each do |twiit| %>
+<tr>
+	<th> <%= twiit.name %> </th>
+	<th> <%= twiit.released_on.strftime("%B %e, %Y") %> </th>
+	</tr>
+<% end %>
+</table>	
+
+
+
+
+<h1>Twitter feed</h1>
+<h2>Import Information</h2>
+
+<%= form_tag import_twiits_path, multipart: true do %>
+	<%= file_field_tag :file %>
+
+	<%= submit_tag "Import" %>
+
+<% end %>

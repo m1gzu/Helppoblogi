@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
-	http_basic_authenticate_with name: "migzu", password:"1234", except: [:index, :show]
+	#http_basic_authenticate_with name: "migzu", password:"1234", except: [:index, :show]
+	before_action :authenticate_user!, except: [:index, :show]
+	#before_filter :correct_user!, only: [:edit, :update, :show]
 
 	def index 
 		@posts =Post.all
@@ -10,13 +12,13 @@ class PostsController < ApplicationController
 	end
 
 	def new
-		@post = Post.new
+		@post = current_user.posts.build
 	end
 
 	def create
 		#render plain: params[:post].inspect
 		#ylläoleva oli testinä postauksien tallentamista varten
-		@post = Post.new(post_params)
+		@post = current_user.posts.build(post_params)
 		
 		if(@post.save)
 		redirect_to @post
